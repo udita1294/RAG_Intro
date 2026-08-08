@@ -12,3 +12,18 @@ if not my_api_key:
 client = Groq(api_key=my_api_key)
 model = "llama-3.3-70b-versatile"
 
+def ask_llm(question):
+    sys_prompt = "Answer the question in one line only"
+    system_message = {
+        "role": "system",
+        "content": sys_prompt
+    }
+    message = {
+        "role": "user",
+        "content": question
+    }
+    messages = [system_message, message]
+    response = client.chat.completions.create(model=model, messages=messages)
+    answer = response.choices[0].message.content
+    return answer
+
